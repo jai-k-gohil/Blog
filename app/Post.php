@@ -11,6 +11,10 @@ class Post extends Model
         return $this->hasMany('\App\Like','post_id');
     }
 
+    public function user() {
+        return $this->belongsTo('App\User');
+    }
+
     public function tags() {
         return $this->belongsToMany('\App\Tag','post_tag','tag_id','post_id');
     }
