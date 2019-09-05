@@ -6,6 +6,7 @@ use App\Post;
 use App\Like;
 use App\Tag;
 use Auth;
+use Gate;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -94,6 +95,9 @@ class PostController extends Controller
             'content' => 'required|min:10'
         ]);
         $post = Post::find($request->input('id'));
+        if (Gate::denies('manipulate-post',$post)) {
+            return redirect()->back();
+        }
         $post->title = $request->input('title');
         $post->content = $request->input('content');
         $post->save();
@@ -110,6 +114,9 @@ class PostController extends Controller
             return redirect()->back();
         }
         $post = Post::find($id);
+        if (Gate::denies('manipulate-post',$post)) {
+            return redirect()->back();
+        }
         $post->likes()->delete();
         $post->tags()->detach();
         $post->delete();
