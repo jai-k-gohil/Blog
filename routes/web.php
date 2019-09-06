@@ -67,3 +67,8 @@ Route::post('/login',[
     'uses' => 'SigninController@signin',
     'as' => 'auth.signin'
 ]);
+
+Route::get('/password/reset/{token}', [
+    'uses' => 'Auth\ResetPasswordController@showResetForm',
+    'as' => 'password.reset'
+]);
