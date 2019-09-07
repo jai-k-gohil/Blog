@@ -24,9 +24,6 @@ class PostController extends Controller
 
     public function getAdminIndex()
     {
-        if (!Auth::check()) {
-            return redirect()->back();
-        }
         $posts = Post::all();
         return view('admin.index', ['posts' => $posts]);
     }
@@ -49,18 +46,12 @@ class PostController extends Controller
 
     public function getAdminCreate()
     {
-        if (!Auth::check()) {
-            return redirect()->back();
-        }
         $tags = Tag::all();
         return view('admin.create',['tags' => $tags]);
     }
 
     public function getAdminEdit($id)
     {
-        if (!Auth::check()) {
-            return redirect()->back();
-        }
         $post = Post::find($id);
         $tags = Tag::all();
         return view('admin.edit', ['post' => $post, 'postId' => $id,'tags' => $tags]);
@@ -73,9 +64,6 @@ class PostController extends Controller
             'content' => 'required|min:10'
         ]);
         $user = Auth::user();
-        if (!$user) {
-            return redirect()->back();
-        }
         $post = new Post([
             'title' => $request->input('title'),
             'content' => $request->input('content')
@@ -87,9 +75,9 @@ class PostController extends Controller
 
     public function postAdminUpdate(Store $session, Request $request)
     {
-        if (!Auth::check()) {
-            return redirect()->back();
-        }
+//        if (!Auth::check()) {
+//            return redirect()->back();
+//        }
         $this->validate($request, [
             'title' => 'required|min:5',
             'content' => 'required|min:10'
@@ -110,9 +98,6 @@ class PostController extends Controller
 
     public function getAdminDelete($id)
     {
-        if (!Auth::check()) {
-            return redirect()->back();
-        }
         $post = Post::find($id);
         if (Gate::denies('manipulate-post',$post)) {
             return redirect()->back();
