@@ -12,8 +12,7 @@
                 <li><a href="{{ route('admin.index') }}">Posts</a></li>
                 <li>
                     <a href="{{ url('/logout') }}"
-                       onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
+                       onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                         Logout
                     </a>
 
